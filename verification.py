@@ -4,7 +4,7 @@ import re
 
 organizationID = 'org-FybWVqGLBkw8CvVotBhNd5ks'
 projectId = 'proj_lekqqu5XfNaN4TSSpvs6JBqR'
-api_key = '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'
+api_key = 'Enter here'
 model = "gpt-4o-mini"
 
 client = OpenAI(
