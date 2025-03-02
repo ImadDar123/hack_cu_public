@@ -1,0 +1,377 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Source Finder</title>
+  <style>
+    :root {
+      --primary: #5e60ce;
+      --primary-light: #6930c3;
+      --secondary: #f8f9fa;
+      --accent: #72efdd;
+      --accent-light: #80ffdb;
+      --text-dark: #2b2d42;
+      --text-light: #6c757d;
+      --white: #ffffff;
+      --shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+      --radius: 12px;
+    }
+    
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    html {
+      overflow: hidden;
+    }
+    
+    body {
+      font-family: 'Segoe UI', Roboto, 'Helvetica Neue', Arial, sans-serif;
+      width: 360px;
+      color: var(--text-dark);
+      background-color: var(--white);
+    }
+    
+    .header {
+      background: linear-gradient(135deg, var(--primary), var(--primary-light));
+      color: var(--white);
+      padding: 22px 20px;
+      border-radius: 0 0 30% 30% / 30px;
+      box-shadow: var(--shadow);
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .header::before {
+      content: "";
+      position: absolute;
+      top: -50%;
+      left: -50%;
+      width: 200%;
+      height: 200%;
+      background: url("data:image/svg+xml,%3Csvg width='100' height='100' viewBox='0 0 100 100' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M11 18c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm48 25c3.866 0 7-3.134 7-7s-3.134-7-7-7-7 3.134-7 7 3.134 7 7 7zm-43-7c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm63 31c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM34 90c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zm56-76c1.657 0 3-1.343 3-3s-1.343-3-3-3-3 1.343-3 3 1.343 3 3 3zM12 86c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm28-65c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm23-11c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-6 60c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm29 22c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zM32 63c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm57-13c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm-9-21c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM60 91c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM35 41c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2zM12 60c1.105 0 2-.895 2-2s-.895-2-2-2-2 .895-2 2 .895 2 2 2z' fill='%23ffffff' fill-opacity='0.08' fill-rule='evenodd'/%3E%3C/svg%3E");
+      z-index: 0;
+    }
+    
+    .header h1 {
+      margin: 0;
+      font-size: 24px;
+      font-weight: 600;
+      position: relative;
+      z-index: 1;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+      letter-spacing: 0.5px;
+    }
+    
+    .header-icon {
+      margin-right: 10px;
+      vertical-align: middle;
+      color: var(--accent-light);
+      filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.2));
+    }
+    
+    .content {
+      padding: 20px;
+      position: relative;
+    }
+    
+    .content::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url("data:image/svg+xml,%3Csvg width='52' height='26' viewBox='0 0 52 26' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%23f0f0f0' fill-opacity='0.4'%3E%3Cpath d='M10 10c0-2.21-1.79-4-4-4-3.314 0-6-2.686-6-6h2c0 2.21 1.79 4 4 4 3.314 0 6 2.686 6 6 0 2.21 1.79 4 4 4 3.314 0 6 2.686 6 6 0 2.21 1.79 4 4 4v2c-3.314 0-6-2.686-6-6 0-2.21-1.79-4-4-4-3.314 0-6-2.686-6-6zm25.464-1.95l8.486 8.486-1.414 1.414-8.486-8.486 1.414-1.414z' /%3E%3C/g%3E%3C/g%3E%3C/svg%3E");
+      opacity: 0.05;
+      z-index: -1;
+    }
+    
+    .search-box {
+      display: flex;
+      margin-bottom: 20px;
+      box-shadow: 0 3px 15px rgba(0, 0, 0, 0.1);
+      border-radius: var(--radius);
+      overflow: hidden;
+      transition: all 0.3s;
+      position: relative;
+    }
+    
+    .search-box:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 5px 20px rgba(0, 0, 0, 0.15);
+    }
+    
+    .search-box input {
+      flex-grow: 1;
+      padding: 14px 15px;
+      border: 2px solid transparent;
+      border-right: none;
+      border-radius: var(--radius) 0 0 var(--radius);
+      font-size: 14px;
+      transition: all 0.3s;
+      background-color: #f9f9f9;
+    }
+    
+    .search-box input:focus {
+      outline: none;
+      border-color: var(--accent);
+      background-color: var(--white);
+    }
+    
+    .search-box button {
+      padding: 0 20px;
+      background: linear-gradient(45deg, var(--primary-light), var(--primary));
+      color: var(--white);
+      border: none;
+      font-weight: 500;
+      border-radius: 0 var(--radius) var(--radius) 0;
+      cursor: pointer;
+      transition: all 0.3s;
+      display: flex;
+      align-items: center;
+      position: relative;
+      overflow: hidden;
+    }
+    
+    .search-box button::before {
+      content: "";
+      position: absolute;
+      top: 0;
+      left: -100%;
+      width: 100%;
+      height: 100%;
+      background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+      transition: 0.5s;
+    }
+    
+    .search-box button:hover::before {
+      left: 100%;
+    }
+    
+    .search-box button:hover {
+      background: linear-gradient(45deg, var(--primary), var(--primary-light));
+    }
+    
+    .search-icon {
+      font-size: 16px;
+    }
+    
+    .instructions {
+      background-color: var(--secondary);
+      padding: 18px;
+      border-radius: var(--radius);
+      margin-bottom: 25px;
+      border-left: 4px solid var(--accent);
+      position: relative;
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+    }
+    
+    .instructions::after {
+      content: "";
+      position: absolute;
+      top: -10px;
+      right: 10px;
+      font-size: 18px;
+      filter: drop-shadow(0 2px 2px rgba(0, 0, 0, 0.1));
+    }
+    
+    .instructions-title {
+      font-weight: 600;
+      font-size: 15px;
+      margin-bottom: 10px;
+      color: var(--primary);
+      display: flex;
+      align-items: center;
+    }
+    
+    .instructions-icon {
+      margin-right: 8px;
+      color: var(--accent);
+    }
+    
+    .instructions ul {
+      padding-left: 22px;
+      font-size: 13px;
+      line-height: 1.6;
+      color: var(--text-light);
+    }
+    
+    .instructions li {
+      margin-bottom: 6px;
+      position: relative;
+    }
+    
+    .instructions li::marker {
+      color: var(--primary-light);
+    }
+    
+    .history-title {
+      font-size: 17px;
+      font-weight: 600;
+      margin: 20px 0 12px;
+      padding-bottom: 8px;
+      border-bottom: 2px solid #eee;
+      color: var(--text-dark);
+      display: flex;
+      align-items: center;
+    }
+    
+    .history-icon {
+      margin-right: 8px;
+      color: var(--primary);
+    }
+    
+    .history-container {
+      max-height: 150px;
+      overflow-y: auto;
+      border-radius: var(--radius);
+      background-color: var(--secondary);
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.05);
+      position: relative;
+    }
+    
+    .history-container::-webkit-scrollbar {
+      width: 8px;
+    }
+    
+    .history-container::-webkit-scrollbar-track {
+      background: #f1f1f1;
+      border-radius: 10px;
+    }
+    
+    .history-container::-webkit-scrollbar-thumb {
+      background: #ccc;
+      border-radius: 10px;
+    }
+    
+    .history-container::-webkit-scrollbar-thumb:hover {
+      background: #aaa;
+    }
+    
+    .history-item {
+      padding: 12px 15px;
+      border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+      cursor: pointer;
+      transition: all 0.25s;
+      position: relative;
+      z-index: 1;
+    }
+    
+    .history-item:last-child {
+      border-bottom: none;
+    }
+    
+    .history-item:hover {
+      background-color: rgba(114, 239, 221, 0.12);
+      transform: translateX(3px);
+    }
+    
+    .history-item::before {
+      content: "";
+      position: absolute;
+      left: 0;
+      top: 0;
+      height: 100%;
+      width: 0;
+      background-color: var(--accent);
+      opacity: 0.2;
+      transition: width 0.25s;
+      z-index: -1;
+    }
+    
+    .history-item:hover::before {
+      width: 5px;
+    }
+    
+    .history-text {
+      font-size: 13px;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      color: var(--text-dark);
+    }
+    
+    .history-date {
+      font-size: 11px;
+      color: var(--text-light);
+      margin-top: 4px;
+      display: flex;
+      align-items: center;
+    }
+    
+    .history-date i {
+      font-size: 10px;
+      margin-right: 4px;
+      color: var(--primary-light);
+    }
+    
+    .no-history {
+      color: var(--text-light);
+      font-style: italic;
+      text-align: center;
+      padding: 25px;
+      background-image: url("data:image/svg+xml,%3Csvg width='30' height='30' viewBox='0 0 30 30' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M15 0C6.716 0 0 6.716 0 15c0 8.284 6.716 15 15 15 8.284 0 15-6.716 15-15 0-8.284-6.716-15-15-15zm0 27c-6.627 0-12-5.373-12-12s5.373-12 12-12 12 5.373 12 12-5.373 12-12 12zm-1.57-10.14c0-.807.679-1.46 1.516-1.46.838 0 1.516.653 1.516 1.46s-.678 1.46-1.516 1.46c-.837 0-1.515-.653-1.515-1.46zm-.198-8.460h3.822v1.5h-3.822v-1.5z' fill='%23f0f0f0'/%3E%3C/svg%3E");
+      background-repeat: no-repeat;
+      background-position: center 30%;
+      background-size: 40px;
+    }
+    
+    @keyframes float {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(-5px); }
+      100% { transform: translateY(0px); }
+    }
+    
+    .floating {
+      animation: float 3s ease-in-out infinite;
+    }
+  </style>
+  <!-- Font Awesome for icons -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+  <div class="header">
+    <h1><i class="fas fa-magnifying-glass-location header-icon floating"></i>Source Finder</h1>
+  </div>
+  
+  <div class="content">
+    <div class="search-box">
+      <input type="text" id="search-input" placeholder="Enter a quote or claim to verify...">
+      <button id="search-button"><i class="fas fa-search search-icon"></i></button>
+    </div>
+    
+    <div class="instructions">
+      <div class="instructions-title">
+        <i class="fas fa-lightbulb instructions-icon"></i>How to use
+      </div>
+      <ul>
+        <li>Highlight text on any webpage</li>
+        <li>Click the "Find Source" button that appears</li>
+        <li>Or right-click and select "Find source for this text"</li>
+        <li>Or enter text manually above</li>
+      </ul>
+    </div>
+    
+    <div class="history-title">
+      <i class="fas fa-clock-rotate-left history-icon"></i>Recent Searches
+    </div>
+    <div class="history-container" id="history-container">
+      <div class="no-history">No recent searches yet</div>
+      <!-- Example history items (for preview) -->
+      <div class="history-item">
+        <div class="history-text">"The average person spends 6 months of their life waiting at traffic lights."</div>
+        <div class="history-date"><i class="fas fa-calendar-day"></i>Today, 2:45 PM</div>
+      </div>
+      <div class="history-item">
+        <div class="history-text">"NASA spent millions developing a pen that would work in space, while the Russians used a pencil."</div>
+        <div class="history-date"><i class="fas fa-calendar-day"></i>Yesterday, 11:20 AM</div>
+      </div>
+    </div>
+  </div>
+  
+  <script src="popup.js"></script>
+</body>
+</html>
